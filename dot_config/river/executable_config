@@ -19,7 +19,8 @@ riverctl set-repeat 50 300
 riverctl map normal Super+Shift Return spawn foot
 
 # Launcher
-riverctl map normal Super D spawn 'bemenu-run'
+riverctl map normal Super D \
+    spawn "$HOME/.local/bin/appmenu"
 
 
 # ------------------------------------------------------------

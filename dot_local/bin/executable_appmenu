@@ -1,0 +1,53 @@
+#!/bin/sh
+set -u
+
+mapping="$(mktemp)"
+trap 'rm -f "$mapping"' EXIT
+
+desktop_name() {
+    file="$1"
+    lang="${LANG%%_*}"
+    while IFS="=" read -r key value; do
+        [ "$key" = "Name" ] && { printf '%s\n' "$value"; return; }
+        [ "$lang" = "ja" ] && [ "$key" = "Name[ja]" ] && { printf '%s\n' "$value"; return; }
+    done < "$file"
+}
+
+for dir in "$HOME/.local/share/applications" \
+    /usr/local/share/applications \
+    /usr/share/applications
+do
+    [ -d "$dir" ] || continue
+    for f in "$dir"/*.desktop; do
+        [ -f "$f" ] || continue
+
+        case "$(sed -n 's/^Type=//p' "$f" | head -n1)" in
+            Application) ;;
+            *) continue ;;
+        esac
+
+        for key in NoDisplay Hidden; do
+            [ "$(sed -n "s/^$key=//p" "$f" | head -n1)" = "true" ] && continue 2
+        done
+
+        id="$(basename "$f" .desktop)"
+        grep -Fq "$(printf '\t%s' "$id")" "$mapping" && continue
+
+        name="$(desktop_name "$f")"
+        [ -n "$name" ] || continue
+        printf '%s\t%s\n' "$name" "$id" >> "$mapping"
+    done
+done
+
+[ -s "$mapping" ] || exit 0
+
+selection="$(
+    cut -f1 "$mapping" |
+    bemenu -p 'Run '
+)"
+[ -n "$selection" ] || exit 0
+
+app_id="$(awk -F'\t' -v name="$selection" '$1 == name { print $2; exit }' "$mapping")"
+[ -n "$app_id" ] || exit 1
+
+gtk-launch "$app_id"
