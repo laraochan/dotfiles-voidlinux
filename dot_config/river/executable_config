@@ -179,7 +179,16 @@ done
 # ------------------------------------------------------------
 
 riverctl map normal None Print \
-    spawn "$HOME/.local/bin/screenshot-region"
+    spawn "$HOME/.local/bin/screenshot region clipboard"
+
+riverctl map normal Shift Print \
+    spawn "$HOME/.local/bin/screenshot region file"
+
+riverctl map normal Super Print \
+    spawn "$HOME/.local/bin/screenshot full clipboard"
+
+riverctl map normal Super+Shift Print \
+    spawn "$HOME/.local/bin/screenshot full file"
 
 
 # ------------------------------------------------------------

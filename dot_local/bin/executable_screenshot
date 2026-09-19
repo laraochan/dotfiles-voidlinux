@@ -1,0 +1,45 @@
+#!/bin/sh
+set -u
+
+mode="${1:-region}"
+out="${2:-clipboard}"
+save_dir="${SCREENSHOT_DIR:-$HOME/Pictures/screenshots}"
+
+case "$mode" in
+    region|full) ;;
+    *) echo "usage: screenshot {region|full} [clipboard|file]" >&2; exit 2 ;;
+esac
+
+case "$out" in
+    clipboard|file) ;;
+    *) echo "usage: screenshot {region|full} [clipboard|file]" >&2; exit 2 ;;
+esac
+
+case "$mode" in
+    region)
+        geometry="$(slurp -f '%g' 2>/dev/null)" || exit 0
+        grim_args="-g $geometry"
+        ;;
+    full)
+        grim_args="-c"
+        ;;
+esac
+
+image="$(mktemp)"
+trap 'rm -f "$image"' EXIT
+
+if ! grim $grim_args "$image" 2>/dev/null; then
+    notify-send -u critical "screenshot" "capture failed"
+    exit 1
+fi
+
+if [ "$out" = "clipboard" ]; then
+    wl-copy -t image/png < "$image"
+    notify-send -t 2000 "screenshot" "$mode copied to clipboard"
+else
+    mkdir -p "$save_dir"
+    screenshot="$save_dir/$(date +%Y-%m-%d_%H-%M-%S_$mode.png)"
+    cp "$image" "$screenshot"
+    wl-copy -t image/png < "$screenshot"
+    notify-send -t 2000 "screenshot" "saved: $screenshot"
+fi
