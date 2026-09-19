@@ -29,6 +29,7 @@ limine
 mako
 mesa-dri
 mesa-vulkan-radeon
+ncurses-term
 nerd-fonts
 noto-fonts-cjk
 noto-fonts-emoji
