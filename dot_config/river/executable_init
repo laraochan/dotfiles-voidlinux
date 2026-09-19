@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Session components
+mako &
+fcitx5 -d &
+
+# Optional
+swaybg -i "$HOME/Pictures/Wallpapers/132502988_p0.png" -c 70cbc8 -m fit &
+swayidle -w timeout 600 'swaylock' &
+yambar &
+# kanshi &
+
+# Configure River
+"$HOME/.config/river/config"
+
+# Layout generator
+rivertile -view-padding 6 -outer-padding 6 &

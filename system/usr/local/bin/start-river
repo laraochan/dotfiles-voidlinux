@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=river
+export XDG_CURRENT_DESKTOP=river
+
+exec "$SHELL" -lc 'exec dbus-run-session river'

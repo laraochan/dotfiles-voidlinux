@@ -1,0 +1,41 @@
+bar:
+  height: 28
+  location: top
+
+  background: 1e1e2eff
+  foreground: cdd6f4ff
+
+  font: monospace:size=11
+
+  left:
+    - river:
+        content:
+          map:
+            conditions:
+              focused:
+                string:
+                  text: "[{id}]"
+                  margin: 6
+
+              occupied:
+                string:
+                  text: "{id}"
+                  margin: 6
+
+              ~occupied:
+                empty: {}
+
+        title:
+          string:
+            text: "{title}"
+            max: 50
+            margin: 12
+
+  right:
+    - clock:
+        date-format: "%Y-%m-%d"
+        time-format: "%H:%M"
+        content:
+          string:
+            text: "{date}  {time}"
+            margin: 8
