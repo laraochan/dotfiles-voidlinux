@@ -26,7 +26,7 @@ do
             *) continue ;;
         esac
 
-        for key in NoDisplay Hidden; do
+        for key in NoDisplay Hidden Terminal; do
             [ "$(sed -n "s/^$key=//p" "$f" | head -n1)" = "true" ] && continue 2
         done
 
