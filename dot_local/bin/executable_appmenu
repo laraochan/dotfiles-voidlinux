@@ -43,7 +43,7 @@ done
 
 selection="$(
     cut -f1 "$mapping" |
-    bemenu -p 'Run '
+    bemenu -f -i -p 'Run ' --accept-single
 )"
 [ -n "$selection" ] || exit 0
 
