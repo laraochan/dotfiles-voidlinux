@@ -195,7 +195,7 @@ riverctl map normal Super+Shift X \
 # ------------------------------------------------------------
 
 riverctl map normal Super R \
-    spawn "$HOME/.config/river/config"
+    spawn "$HOME/.local/bin/river-reload"
 
 
 # ------------------------------------------------------------

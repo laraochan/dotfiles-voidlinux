@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+
+config="$HOME/.config/river/config"
+log="$(mktemp)"
+
+trap 'rm -f "$log"' EXIT
+
+if "$config" 2> "$log"; then
+    notify-send -t 3000 "river" "config reloaded"
+    exit 0
+fi
+
+body="$(grep -v 'overwrote an existing keybinding' "$log" | tail -n 5 || true)"
+notify-send -u critical "river" "config reload failed:
+$body"
+exit 1
