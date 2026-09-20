@@ -19,11 +19,11 @@ pre-commit:
     - name: Lint executable files
       glob: "**/executable_*"
       fail_text: shellcheck がおかしな点を検出しました。`mise exec -- shellcheck <file>` で確認してください。
-      run: shellcheck {staged_files}
+      run: mise exec -- shellcheck {staged_files}
 
     - name: Lint system scripts
       glob:
         - "system/**/*.sh"
         - "system/usr/local/bin/*"
       fail_text: shellcheck がおかしな点を検出しました。`mise exec -- shellcheck <file>` で確認してください。
-      run: shellcheck {staged_files}
+      run: mise exec -- shellcheck {staged_files}
