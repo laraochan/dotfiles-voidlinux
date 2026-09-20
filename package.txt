@@ -5,6 +5,7 @@ brightnessctl
 btop
 cage
 chezmoi
+chromium
 dbus
 efibootmgr
 fcitx5

@@ -1,0 +1,5 @@
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR="hx"
+
+eval "$(mise activate zsh)"
+eval "$(starship init zsh)"
