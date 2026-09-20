@@ -1,0 +1,10 @@
+# External 4K display attached: use only the external display
+profile docked {
+    output "LG Electronics LG HDR 4K 0x000707C6"
+    output "eDP-1" disable
+}
+
+# External display disconnected: back to the built-in display
+profile undocked {
+    output "eDP-1" enable
+}
