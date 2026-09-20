@@ -1,0 +1,29 @@
+min_version: 2.0.0
+
+# NOTE: managed via mise (see mise.toml). Run `mise install && lefthook install`
+# to enable these hooks after a fresh clone.
+
+pre-commit:
+  parallel: false
+  jobs:
+    - name: Sync package list
+      run: |
+        if command -v xbps-dump >/dev/null 2>&1; then
+          xbps-dump > package.txt
+          git add package.txt
+        fi
+
+    - name: Check whitespace
+      run: git diff --cached --check && git diff --check
+
+    - name: Lint executable files
+      glob: "**/executable_*"
+      fail_text: shellcheck がおかしな点を検出しました。`mise exec -- shellcheck <file>` で確認してください。
+      run: shellcheck {staged_files}
+
+    - name: Lint system scripts
+      glob:
+        - "system/**/*.sh"
+        - "system/usr/local/bin/*"
+      fail_text: shellcheck がおかしな点を検出しました。`mise exec -- shellcheck <file>` で確認してください。
+      run: shellcheck {staged_files}
