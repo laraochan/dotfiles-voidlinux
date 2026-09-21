@@ -52,6 +52,7 @@ tmux
 turnstile
 vulkan-loader
 wl-clipboard
+wlopm
 wlr-randr
 xdg-desktop-portal
 xdg-desktop-portal-gtk

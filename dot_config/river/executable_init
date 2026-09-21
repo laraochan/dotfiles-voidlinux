@@ -6,7 +6,10 @@ fcitx5 -d &
 
 # Optional
 swaybg -i "$HOME/Pictures/Wallpapers/132502988_p0.png" -c 70cbc8 -m fit &
-swayidle -w timeout 600 'swaylock' &
+swayidle -w \
+    timeout 600 'swaylock' \
+    timeout 660 'wlopm --off *' \
+    resume 'wlopm --on *' &
 yambar &
 kanshi &
 
